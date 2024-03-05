@@ -12,4 +12,11 @@ class ExtracurricularController extends Controller
         $extracurricular = Extracurricular::all();
         return view('extracurricular', ['extracurricularList' => $extracurricular]);
     }
+
+    public function show($id)
+    {
+        $extracurricular = Extracurricular::with('students')
+            ->findOrFail($id);
+        return view('extracurricular-detail', ['extracurricularDetail' => $extracurricular]);
+    }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.mainlayout')
 
-@section('title', 'Student Detail')
+@section('title', 'Teacher Detail')
 
 @section('content')
 
@@ -20,7 +20,7 @@
         <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
         </svg>
-        <a href="/students" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Student</a>
+        <a href="/teacher" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Teachers</a>
       </div>
     </li>
     <li>
@@ -28,7 +28,7 @@
         <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
         </svg>
-        <a href="#" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Student Detail</a>
+        <a href="#" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Teacher Detail</a>
       </div>
     </li>
     <li>
@@ -36,7 +36,7 @@
         <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
         </svg>
-        <a href="#" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">{{ $studentDetail->name }}</a>
+        <a href="#" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">{{ $teacherDetail->name }}</a>
       </div>
     </li>
   </ol>
@@ -46,47 +46,39 @@
   <div class="flex">
     <span class="w-52 text-gray-500 p-2 font-bold">Name</span>
     <span class="p-2 text-gray-500">:</span>
-    <span class="p-2 text-gray-500">{{ $studentDetail->name }}</span>
-  </div>
-  <div class="flex">
-    <span class="w-52 text-gray-500 p-2 font-bold">Student ID</span>
-    <span class="p-2 text-gray-500">:</span>
-    <span class="p-2 text-gray-500">{{ $studentDetail->student_id }}</span>
+    <span class="p-2 text-gray-500">{{ $teacherDetail->name }}</span>
   </div>
   <div class="flex">
     <span class="w-52 text-gray-500 p-2 font-bold">Class</span>
     <span class="p-2 text-gray-500">:</span>
-    <span class="p-2 text-gray-500">{{ $studentDetail->class->name }}</span>
-  </div>
-  <div class="flex">
-    <span class="w-52 text-gray-500 p-2 font-bold">Gender</span>
-    <span class="p-2 text-gray-500">:</span>
     <span class="p-2 text-gray-500">
-      @if ($studentDetail->gender == 'M')
-      Male
+      @if ($teacherDetail->name)
+      {{ $teacherDetail->class->name }}
       @else
-      Female
+      -
       @endif
     </span>
   </div>
   <div class="flex">
-    <span class="w-52 text-gray-500 p-2 font-bold">Homeroom Teacher</span>
-    <span class="p-2 text-gray-500">:</span>
-    <span class="p-2 text-gray-500"> {{ $studentDetail->class->homeroomTeacher->name }}</span>
-  </div>
-  <div class="flex">
-    <span class="w-52 text-gray-500 p-2 font-bold">Extracurricular</span>
+    <span class="w-52 text-gray-500 p-2 font-bold">Name</span>
     <span class="p-2 text-gray-500">:</span>
     <span class="p-2 text-gray-500">
+      @if ($teacherDetail->name)
       <ul class="list-decimal text-gray-500 ml-3">
-        @foreach ($studentDetail->extracurriculars as $extracurricular)
+        @foreach($teacherDetail->class->students as $student)
         <li>
-          {{ $extracurricular->name }}
+          {{ $student->name }}
         </li>
         @endforeach
       </ul>
+      @else
+      -
+      @endif
+
+
     </span>
   </div>
+
 </div>
 
 

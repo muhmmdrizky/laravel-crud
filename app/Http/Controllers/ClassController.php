@@ -13,4 +13,10 @@ class ClassController extends Controller
         $class = Classroom::all();
         return view('classroom', ['classList' => $class]);
     }
+    public function show($id)
+    {
+        $class = Classroom::with(['students', 'homeroomTeacher'])
+            ->findOrFail($id);
+        return view('class-detail', ['classDetail' => $class]);
+    }
 }

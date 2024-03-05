@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classroom;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,7 +18,18 @@ class StudentController extends Controller
 
     public function show($id)
     {
-        $student = Student::findOrFail($id);
+        $student = Student::with(['class.homeroomTeacher', 'extracurriculars'])
+            ->findOrFail($id);
         return view('student-detail', ['studentDetail' => $student]);
+    }
+
+    public function create()
+    {
+        $class = Classroom::select('id', 'name')->get();
+        return view('student-add', ['class' => $class]);
+    }
+
+    public function store()
+    {
     }
 }
