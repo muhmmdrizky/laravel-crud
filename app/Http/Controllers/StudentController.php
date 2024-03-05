@@ -29,7 +29,9 @@ class StudentController extends Controller
         return view('student-add', ['class' => $class]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        Student::create($request->all());
+        return redirect('/students');
     }
 }
