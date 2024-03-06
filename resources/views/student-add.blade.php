@@ -36,30 +36,38 @@
 
 <div class="p-5 border-2 border-gray-200 rounded-lg">
   <form action="/student" method="post" class="max-w-sm">
+    @if ($errors->any())
+    @foreach ($errors->all() as $error)
+    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+      <span class="font-medium">{{ $error }}</span>
+    </div>
+    @endforeach
+    @endif
+
     @csrf
     <div class="mb-5">
       <label for="full-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full Name</label>
-      <input type="text" name="name" id="full-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      <input type="text" name="name" id="full-name" value="{{ old('name') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
     </div>
     <div class="mb-5">
       <label for="student-id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Student ID</label>
-      <input type="text" name="student_id" id="base-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      <input type="text" name="student_id" id="base-input" value="{{ old('student_id') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
     </div>
     <div class="mb-5">
       <label for="class" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Class</label>
       <select name="class_id" id="class" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option selected>Choose Class</option>
+        <option value="">Choose Class</option>
         @foreach ($class as $item)
-        <option value="{{ $item->id }}">{{ $item->name }}</option>
+        <option value="{{ $item->id }}" {{ old('class_id') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
         @endforeach
       </select>
     </div>
     <div class="mb-5">
       <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
       <select name="gender" id="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option selected>Choose Gender</option>
-        <option value="M">Male</option>
-        <option value="F">Female</option>
+        <option value="">Choose Gender</option>
+        <option value="M" {{ old('gender') == 'M' ? 'selected' : '' }}>Male</option>
+        <option value="F" {{ old('gender') == 'F' ? 'selected' : '' }}>Female</option>
       </select>
     </div>
     <div class="mb-5">

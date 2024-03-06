@@ -30,6 +30,18 @@
   </a>
 </div>
 
+@if(Session::has('status'))
+<div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+  <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+  </svg>
+  <span class="sr-only">Info</span>
+  <div>
+    <span class="font-medium">{{ Session::get('message') }}</span>
+  </div>
+</div>
+@endif
+
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -73,15 +85,40 @@
         </td>
         <td class="px-6 py-4 text-right">
           <a href="student-detail/{{$student->id}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Details</a> |
-          <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Update</a> |
-          <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+          <a href="student-edit/{{$student->id}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> |
+          <form action="student-destroy/{{$student->id}}" class="inline-block" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" onclick="deleteData()" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</button>
+          </form>
         </td>
       </tr>
     </tbody>
     @endforeach
   </table>
 </div>
+<script>
+  function deleteData() {
+    // Show confirmation
+    if (!confirm('Are you sure you want to delete this data?')) {
+      return;
+    }
 
+    // Send request delete data using AJAX
+    $.ajax({
+      url: "student-destroy/{{$student->id}}",
+      method: "DELETE",
+      success: function() {
+        // Show success message
+        alert('Data has been delete.');
+      },
+      error: function() {
+        // Show error message
+        alert('There is something wrong.');
+      }
+    });
+  }
+</script>
 
 @endsection
 @vite('resources/js/app.js')

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100)->nullable(false);
             $table->string('student_id', 10)->nullable(false);
+            $table->string('gender', 1)->nullable(false);
             $table->timestamps();
         });
     }
