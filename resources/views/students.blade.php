@@ -96,6 +96,11 @@
     </tbody>
     @endforeach
   </table>
+  <nav aria-label="Page navigation example" class="flex justify-center mt-4 mb-5">
+    <ul class="inline-flex -space-x-px text-sm">
+      {{$studentList->links()}}
+    </ul>
+  </nav>
 </div>
 <script>
   function deleteData() {
