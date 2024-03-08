@@ -87,6 +87,16 @@
       </ul>
     </span>
   </div>
+  <div class="flex">
+    <span class="w-52 text-gray-500 p-2 font-bold">Photo</span>
+    <span class="p-2 text-gray-500">:</span>
+    <span>  
+      @if ($studentDetail->image != "")
+      <img class="w-20" src="{{asset('storage/img/'.$studentDetail->image)}}" alt="">
+      @else
+      <img class="w-20" src="{{asset('img/def.png')}}" alt="">      @endif
+    </span>
+  </div>
 </div>
 
 

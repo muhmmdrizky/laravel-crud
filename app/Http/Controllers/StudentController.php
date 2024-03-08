@@ -7,14 +7,23 @@ use App\Models\Classroom;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon as SupportCarbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class StudentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $student = Student::paginate(20);
+        $keyword = $request->keyword;
+        $student = Student::with('class')
+            ->where('name', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('gender', $keyword)
+            ->orWhere('student_id', 'LIKE', '%' . $keyword . '%')
+            ->orWhereHas('class', function ($query) use ($keyword) {
+                $query->where('name', 'LIKE', '%' . $keyword . '%');
+            })
+            ->paginate(20);
         return view('students', ['studentList' => $student]);
     }
 
@@ -34,6 +43,17 @@ class StudentController extends Controller
     // Request $request -> buat nampung data apa aja yang diinput di form
     public function store(StudentCreateRequest $request)
     {
+
+        $newName = '';
+
+        if ($request->file('photo')) {
+            $random = rand(1, 100000);
+            $extension = $request->file('photo')->getClientOriginalExtension();
+            $newName = $request->name . '-' . $random . '.' . $extension;
+            $request->file('photo')->storeAs('img', $newName);
+        }
+
+        $request['image'] = $newName;
         $student = Student::create($request->all());
         if ($student) {
             Session::flash('status', 'success');

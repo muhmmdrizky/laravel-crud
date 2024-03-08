@@ -35,7 +35,7 @@
 </nav>
 
 <div class="p-5 border-2 border-gray-200 rounded-lg">
-  <form action="/student" method="post" class="max-w-sm">
+  <form action="/student" method="post" class="max-w-sm" enctype="multipart/form-data">
     @if ($errors->any())
     @foreach ($errors->all() as $error)
     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -69,6 +69,10 @@
         <option value="M" {{ old('gender') == 'M' ? 'selected' : '' }}>Male</option>
         <option value="F" {{ old('gender') == 'F' ? 'selected' : '' }}>Female</option>
       </select>
+    </div>
+    <div class="mb-5">
+      <label for="photo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Photo</label>
+      <input name="photo" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="photo" type="file">
     </div>
     <div class="mb-5">
       <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
